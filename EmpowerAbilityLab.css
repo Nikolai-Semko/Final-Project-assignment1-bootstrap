@@ -1,4 +1,12 @@
-/* Visual feedback for keyboard navigation */
+/* Navbar height adjustment for better spacing */
+.navbar {
+    min-height: 70px; /* Ensure consistent height */
+}
+
+/* Fixed header spacing adjustment */
+body {
+    padding-top: 70px; /* Match navbar height */
+}/* Visual feedback for keyboard navigation */
 .history-btn.active-key {
     background-color: #e0a620;
     transform: scale(1.1);
