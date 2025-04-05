@@ -151,6 +151,18 @@ function initSPA() {
     // Update current section
     currentSection = sectionId;
     
+    // Update UI elements
+    updateActiveSection(sectionId);
+    
+    // Update URL without page reload - this is what actually affects browser history
+    window.history.pushState({ section: sectionId }, '', `#${sectionId}`);
+    
+    // Update navigation buttons
+    updateNavigationButtons();
+  };
+  
+  // Helper function to update active section without affecting history
+  function updateActiveSection(sectionId) {
     // Update active section
     sections.forEach(section => {
       if (section.id === sectionId) {
@@ -175,12 +187,6 @@ function initSPA() {
     // Update page title for screen readers and browser tab
     document.title = pageTitles[sectionId] || 'Empower Ability Labs';
     
-    // Update URL without page reload
-    window.history.pushState({ section: sectionId }, '', `#${sectionId}`);
-    
-    // Update navigation buttons
-    updateNavigationButtons();
-    
     // Move focus to the section heading for accessibility
     const headingId = `${sectionId}-title`;
     const heading = document.getElementById(headingId);
@@ -195,7 +201,7 @@ function initSPA() {
     
     // Announce section change to screen readers
     announceToScreenReader(`Navigated to ${sectionId} section`);
-  };
+  }
   
   // Update navigation buttons based on current section
   function updateNavigationButtons() {
@@ -225,20 +231,40 @@ function initSPA() {
   
   // Check URL hash on page load
   function checkInitialHash() {
+    // Get hash from URL, removing the # character
     const hash = window.location.hash.substring(1);
+    
+    // Check if hash is a valid section ID
     if (hash && sectionOrder.includes(hash)) {
-      navigateToSection(hash);
+      // Set as initial state without adding to history
+      window.history.replaceState({ section: hash }, '', `#${hash}`);
+      currentSection = hash;
+      updateActiveSection(hash);
     } else {
-      // Set initial history state if no valid hash
+      // Set home as initial state
       window.history.replaceState({ section: 'home' }, '', '#home');
-      navigateToSection('home');
+      currentSection = 'home';
+      updateActiveSection('home');
     }
+    
+    // Update navigation buttons state
+    updateNavigationButtons();
   }
   
   // Handle browser back/forward buttons
   window.addEventListener('popstate', function(event) {
     if (event.state && event.state.section) {
-      navigateToSection(event.state.section);
+      // Use the state from browser history without adding a new history entry
+      const section = event.state.section;
+      
+      // Update active section without pushing to history again
+      updateActiveSection(section);
+      
+      // Update current section tracking
+      currentSection = section;
+      
+      // Update navigation buttons state
+      updateNavigationButtons();
     }
   });
   
@@ -473,6 +499,25 @@ function initNavigationToggle() {
     }
   });
 }
+
+// Add test function to check browser history implementation
+function testBrowserHistorySync() {
+  console.log('Testing browser history sync...');
+  
+  // Go to Services
+  navigateToSection('services');
+  console.log('Navigated to services');
+  
+  // Go to Schedule
+  navigateToSection('schedule');
+  console.log('Navigated to schedule');
+  
+  // Now browser back button should take you to services
+  console.log('Press browser back button to go back to services');
+}
+
+// Uncomment the line below to test
+// setTimeout(testBrowserHistorySync, 2000);
 
 // Utility Functions
 
