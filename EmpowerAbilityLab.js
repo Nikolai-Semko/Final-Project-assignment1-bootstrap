@@ -1,6 +1,9 @@
 // EmpowerAbilityLab.js - Single Page Application functionality
 // Implements the SPA behavior, navigation, modal dialog, form validation, and accessibility features
 
+// Make navigateToSection available globally for keyboard navigation
+let navigateToSection;
+
 document.addEventListener('DOMContentLoaded', function() {
   // Initialize all components
   initSPA();
@@ -9,6 +12,9 @@ document.addEventListener('DOMContentLoaded', function() {
   initSwitchComponent();
   initNavigationToggle();
   
+  // Add keyboard arrow navigation
+  initKeyboardNavigation();
+  
   // Explicitly set home link as active on page load
   const homeLink = document.querySelector('[data-section="home"]');
   if (homeLink) {
@@ -16,6 +22,63 @@ document.addEventListener('DOMContentLoaded', function() {
     homeLink.setAttribute('aria-current', 'page');
   }
 });
+
+// Add keyboard arrow navigation support
+function initKeyboardNavigation() {
+  // Define the order of sections for navigation
+  const sectionOrder = ['home', 'services', 'schedule'];
+  
+  // Add keyboard event listener to the document
+  document.addEventListener('keydown', function(e) {
+    // Only handle left/right arrow keys when not in form fields or other input elements
+    if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) {
+      return;
+    }
+    
+    // Get current section
+    let currentSection = 'home';
+    const activeSection = document.querySelector('.section-container.active');
+    if (activeSection) {
+      currentSection = activeSection.id;
+    }
+    
+    const currentIndex = sectionOrder.indexOf(currentSection);
+    
+    // Left arrow key (previous section)
+    if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      const prevIndex = currentIndex > 0 ? currentIndex - 1 : sectionOrder.length - 1;
+      const prevSection = sectionOrder[prevIndex];
+      navigateToSection(prevSection);
+      
+      // Simulate click on back button for visual feedback
+      const backBtn = document.getElementById('back-btn');
+      if (backBtn) {
+        backBtn.classList.add('active-key');
+        setTimeout(() => {
+          backBtn.classList.remove('active-key');
+        }, 200);
+      }
+    }
+    
+    // Right arrow key (next section)
+    if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      const nextIndex = currentIndex < sectionOrder.length - 1 ? currentIndex + 1 : 0;
+      const nextSection = sectionOrder[nextIndex];
+      navigateToSection(nextSection);
+      
+      // Simulate click on forward button for visual feedback
+      const forwardBtn = document.getElementById('forward-btn');
+      if (forwardBtn) {
+        forwardBtn.classList.add('active-key');
+        setTimeout(() => {
+          forwardBtn.classList.remove('active-key');
+        }, 200);
+      }
+    }
+  });
+}
 
 // SPA Navigation functionality
 function initSPA() {
@@ -83,8 +146,8 @@ function initSPA() {
     navigateToSection(sectionOrder[nextIndex]);
   }
   
-  // Navigation function
-  function navigateToSection(sectionId) {
+  // Make navigateToSection available globally for keyboard navigation
+  navigateToSection = function(sectionId) {
     // Update current section
     currentSection = sectionId;
     
@@ -129,7 +192,10 @@ function initSPA() {
         heading.removeAttribute('tabindex');
       }, 100);
     }
-  }
+    
+    // Announce section change to screen readers
+    announceToScreenReader(`Navigated to ${sectionId} section`);
+  };
   
   // Update navigation buttons based on current section
   function updateNavigationButtons() {

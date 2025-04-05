@@ -1,4 +1,15 @@
-/* EmpowerAbilityLab.css - Minimal custom styles with Bootstrap optimization */
+/* Visual feedback for keyboard navigation */
+.history-btn.active-key {
+    background-color: #e0a620;
+    transform: scale(1.1);
+}
+
+/* Focus indicator styles - enhanced for accessibility */
+a:focus, button:focus, input:focus, select:focus, textarea:focus, [tabindex]:focus {
+    outline: 3px solid #4d90fe;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 3px rgba(77, 144, 254, 0.5);
+}/* EmpowerAbilityLab.css - Minimal custom styles with Bootstrap optimization */
 
 /* Essential custom variables */
 :root {
