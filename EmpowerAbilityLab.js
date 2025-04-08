@@ -21,7 +21,29 @@ document.addEventListener('DOMContentLoaded', function() {
     homeLink.classList.add('active');
     homeLink.setAttribute('aria-current', 'page');
   }
+  
+  // Make headings keyboard focusable
+  initTabableHeadings();
 });
+
+// Initialize headings to be keyboard focusable
+function initTabableHeadings() {
+  // Get all headings with tabindex="0"
+  const tabbableHeadings = document.querySelectorAll('h1[tabindex="0"], h2[tabindex="0"]');
+  
+  // Add keyboard event listeners for better navigation
+  tabbableHeadings.forEach(heading => {
+    heading.addEventListener('keydown', function(e) {
+      // On Enter or Space, announce the heading to screen readers
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        announceToScreenReader(`Heading: ${this.textContent}`);
+      }
+    });
+  });
+  
+  console.log(`Initialized ${tabbableHeadings.length} tabbable headings for accessibility`);
+}
 
 // Add keyboard arrow navigation support
 function initKeyboardNavigation() {

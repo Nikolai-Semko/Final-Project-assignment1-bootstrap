@@ -1,4 +1,18 @@
-/* Visual feedback for keyboard navigation */
+/* Improve heading accessibility with focus styles */
+h1[tabindex="0"]:focus,
+h2[tabindex="0"]:focus {
+    outline: 3px solid #4d90fe;
+    outline-offset: 5px;
+    border-radius: 2px;
+}/* Navbar height adjustment for better spacing */
+.navbar {
+    min-height: 70px; /* Ensure consistent height */
+}
+
+/* Fixed header spacing adjustment */
+body {
+    padding-top: 70px; /* Match navbar height */
+}/* Visual feedback for keyboard navigation */
 .history-btn.active-key {
     background-color: #e0a620;
     transform: scale(1.1);

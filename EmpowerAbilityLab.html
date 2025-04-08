@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!-- Custom styles for Empower Ability Labs -->
     <link rel="stylesheet" href="EmpowerAbilityLab.css"> 
+    <!-- Instruction for screen readers about keyboard shortcuts -->
+    <meta name="keyboard-shortcuts-preference" content="all">
   </head>
 
   <body>
@@ -17,18 +19,18 @@
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
     <!-- Navigation -->
-    <header>
+    <header role="banner">
       <div class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div class="container">
           <!-- Left button -->
-          <button id="back-btn" class="history-btn mr-2" aria-label="Go back">
+          <button id="back-btn" class="history-btn mr-2" aria-label="Previous section">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </button>
           
           <!-- Right button -->
-          <button id="forward-btn" class="history-btn mr-3" aria-label="Go forward">
+          <button id="forward-btn" class="history-btn mr-3" aria-label="Next section">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
@@ -43,7 +45,7 @@
           </button>
           
           <!-- Main Navigation for Empower Ability Labs -->
-          <nav id="navbarNav" class="collapse navbar-collapse">
+          <nav id="navbarNav" class="collapse navbar-collapse" role="navigation">
             <ul class="navbar-nav ml-auto">
               <li class="nav-item">
                 <a class="nav-link active" href="#home" data-section="home" aria-current="page">Home</a>
@@ -82,12 +84,12 @@
     </header>
 
     <!-- Main content area -->
-    <main id="main-content" class="container pt-5 mt-5">
+    <main id="main-content" class="container pt-5 mt-5 mb-2" role="main">
       <!-- Home Section -->
       <section id="home" class="section-container active" aria-labelledby="home-title">
         <!-- Main landing view -->
-        <div class="bg-light p-4 rounded mb-4">
-          <h1 id="home-title" class="mb-3">Welcome to Empower Ability Labs!</h1>
+        <div class="bg-light p-4 rounded mb-4 mt-5" role="region" aria-labelledby="home-title">
+          <h1 id="home-title" class="mb-3 pt-2" tabindex="0">Welcome to Empower Ability Labs!</h1>
           <p>Empower Ability Labs is a hub for learning and empathy-building. We are on a mission to foster understanding and promote inclusive digital experiences for all. We offer a range of services designed to promote accessibility awareness, drive inclusivity, and enhance the user experience. And help you find answers on How do people with disabilities use technology and navigate the digital world? What tools do they employ?</p>
           <button id="meet-community-btn" class="btn btn-warning btn-lg" aria-haspopup="dialog">Meet the Empower Community!</button>
         </div>
@@ -264,7 +266,7 @@
     <div id="modal-overlay" class="modal-overlay" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
       <div class="modal-container bg-white rounded shadow">
         <div class="modal-header p-3 border-bottom">
-          <h2 id="modal-title" class="modal-title h5 mb-0">Community Steering Committee</h2>
+          <h2 id="modal-title" class="modal-title h5 mb-0" tabindex="0">Community Steering Committee</h2>
           <button id="modal-close" class="close" aria-label="Close dialog">&times;</button>
         </div>
         <div class="modal-body p-3">
@@ -283,7 +285,7 @@
       </div>
     </div>
 
-    <footer class="container mt-5 pt-3 border-top">
+    <footer class="container mt-5 pt-3 border-top" role="contentinfo">
       <p class="text-muted">© Copyright Empower Ability Labs Inc 2023. All rights reserved.</p>
     </footer>
 
